@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import {filterImageFromURL, deleteLocalFiles} from './util/util';
+import { filterImageFromURL, deleteLocalFiles } from './util/util';
 
 (async () => {
 
@@ -15,7 +15,29 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
   // @TODO1 IMPLEMENT A RESTFUL ENDPOINT
   // GET /filteredimage?image_url={{URL}}
+  app.get("/filteredimage", async (req, res) => {
 
+    try {
+      let image_url = req.query.image_url;
+      console.log('cjeck => ', image_url);
+
+      if (!image_url) {
+        return res.send("Image URL is required.");
+      }
+
+      let filtered_image_url = await filterImageFromURL(image_url);
+      console.log(filtered_image_url);
+      // let fileToDelete = [filtered_image_url];
+      // console.log(fileToDelete);
+      // await deleteLocalFiles(fileToDelete);
+      res.status(200).sendFile(filtered_image_url);
+
+    } catch (error) {
+      console.log(error);
+      return res.status(422).send("Something went wrong. Be sure we are fixing this.");
+    }
+
+  });
   // endpoint to filter an image from a public url.
   // IT SHOULD
   //    1
@@ -31,17 +53,17 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   /**************************************************************************** */
 
   //! END @TODO1
-  
+
   // Root Endpoint
   // Displays a simple message to the user
-  app.get( "/", async ( req, res ) => {
+  app.get("/", async (req, res) => {
     res.send("try GET /filteredimage?image_url={{}}")
-  } );
-  
+  });
+
 
   // Start the Server
-  app.listen( port, () => {
-      console.log( `server running http://localhost:${ port }` );
-      console.log( `press CTRL+C to stop server` );
-  } );
+  app.listen(port, () => {
+    console.log(`server running http://localhost:${port}`);
+    console.log(`press CTRL+C to stop server`);
+  });
 })();
