@@ -2,6 +2,8 @@ import express, { Express, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import { filterImageFromURL, deleteLocalFiles } from './util/util';
 
+require('dotenv').config();
+
 (async () => {
 
   // Init the Express application
