@@ -3,8 +3,8 @@
 Udagram is a simple cloud application developed alongside the Udacity Cloud Engineering Nanodegree. It allows users to register and log into a web client, post photos to the feed, and process photos using an image filtering microservice.
 
 ## Deployment URLS 
-- ELB URL => http://awseb-awseb-san71hbtrl79-1339960961.us-east-1.elb.amazonaws.com:8082/
-- Image Filter Testing URL => http://awseb-awseb-san71hbtrl79-1339960961.us-east-1.elb.amazonaws.com:8082/filteredimage?image_url=https://blog.hubspot.com/hubfs/image8-2.jpg
+- ELB URL => http://awseb-awseb-san71hbtrl79-1339960961.us-east-1.elb.amazonaws.com/
+- Image Filter Testing URL => http://awseb-awseb-san71hbtrl79-1339960961.us-east-1.elb.amazonaws.com/filteredimage?image_url=https://blog.hubspot.com/hubfs/image8-2.jpg
 - Github URL => https://github.com/ajafik/image-filter-udacity
 
 The project is split into three parts:
