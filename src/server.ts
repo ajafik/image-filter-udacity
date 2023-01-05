@@ -1,11 +1,11 @@
-import express from 'express';
+import express, { Express, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import { filterImageFromURL, deleteLocalFiles } from './util/util';
 
 (async () => {
 
   // Init the Express application
-  const app = express();
+  const app: Express = express();
 
   // Set the network port
   const port = process.env.PORT || 8082;
@@ -15,21 +15,23 @@ import { filterImageFromURL, deleteLocalFiles } from './util/util';
 
   // @TODO1 IMPLEMENT A RESTFUL ENDPOINT
   // GET /filteredimage?image_url={{URL}}
-  app.get("/filteredimage", async (req, res) => {
+  app.get("/filteredimage", async (req: Request, res: Response) => {
 
     try {
-      let image_url = req.query.image_url;
-      console.log('cjeck => ', image_url);
+      let image_url: string = req.query.image_url;
 
       if (!image_url) {
         return res.send("Image URL is required.");
       }
 
-      let filtered_image_url = await filterImageFromURL(image_url);
+      let filtered_image_url: string = await filterImageFromURL(image_url);
       console.log(filtered_image_url);
-      // let fileToDelete = [filtered_image_url];
-      // console.log(fileToDelete);
-      // await deleteLocalFiles(fileToDelete);
+      let fileToDelete = [filtered_image_url];
+      
+      req.on('end', async () => {
+        console.log('File uploaded successfully.');
+        await deleteLocalFiles(fileToDelete);
+      });
       res.status(200).sendFile(filtered_image_url);
 
     } catch (error) {
@@ -56,7 +58,7 @@ import { filterImageFromURL, deleteLocalFiles } from './util/util';
 
   // Root Endpoint
   // Displays a simple message to the user
-  app.get("/", async (req, res) => {
+  app.get("/", async (req: Request, res: Response) => {
     res.send("try GET /filteredimage?image_url={{}}")
   });
 
